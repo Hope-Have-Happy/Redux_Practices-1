@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import { decrement, increment, reset } from "../redux/counter/actions";
+import { decrement as dynamicDecrement, increment as dynamicIncrement, reset as dynamicReset } from "../redux/dynamicCounter/actions";
 
-function Counter({count, increment, decrement, reset}) {
-
+function VariableCounter({count, increment, decrement, reset, dynamic}) {
     return (
         <div className="p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow">
-            <div className="text-2xl font-semibold">From Counter Component</div>
+            <div className="text-2xl font-semibold text-center">From {dynamic ? "Dynamic Variable Counter": "Variable Counter"}  Component</div>
             <div className="text-2xl font-semibold">{count || 0}</div>
             <div className="flex space-x-3">
                 <button
@@ -35,18 +35,18 @@ const mapStateToProps = (state, ownProps) => {
     // ownProps is our own component's props (in our case this prop will be id )
     // console.log(ownProps);
     return {
-        count: state.value,
+        count: ownProps.dynamic ? state.dyncamicCounter.value: state.counter.value ,
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch,ownProps)=>{
     return{
-        increment:()=>{ dispatch(increment())},
-        decrement:()=>{ dispatch(decrement())},
-        reset:()=>{ dispatch(reset())},
+        increment: ()=> {dispatch( ownProps.dynamic ?  dynamicIncrement(5) : increment() )},
+        decrement: ()=> {dispatch( ownProps.dynamic ?  dynamicDecrement(5) : decrement() )},
+        reset: ()=> {dispatch( ownProps.dynamic ?  dynamicReset() : reset() )},
     }
 }
 
 // connecting component with the {connect} method from 'react-redux' is an old scholl way.(It was for the class components)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default connect(mapStateToProps, mapDispatchToProps)(VariableCounter);
