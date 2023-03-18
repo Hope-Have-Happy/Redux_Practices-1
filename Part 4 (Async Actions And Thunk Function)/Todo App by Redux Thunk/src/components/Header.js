@@ -1,50 +1,45 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTodo, allCompleted, clearCompleted } from '../redux/todos/actions';
-import completeImage from "./../assets/images/double-tick.png";
-import noteImage from "./../assets/images/notes.png";
-import plusImage from "./../assets/images/plus.png";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import tickImage from "../assets/images/double-tick.png";
+import noteImage from "../assets/images/notes.png";
+import plusImage from "../assets/images/plus.png";
+import { allCompleted, clearCompleted } from "../redux/todos/actions";
+import addTodo from "../redux/todos/thunk/addTodo";
 
-const Header = () => {
-
-    const [todo, setTodo] = useState("");
-
+export default function Header() {
     const dispatch = useDispatch();
+    const [input, setInput] = useState("");
 
     const handleInput = (e) => {
-        e.target.value && setTodo(e.target.value)
-    }
+        setInput(e.target.value);
+    };
 
-    const handleAddTodo = (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-        if (todo.length) {
-            dispatch(addTodo(todo));
-        } else {
-            alert("Write something to the input field")
-        }
-        setTodo("");
-    }
+        dispatch(addTodo(input));
+        setInput("");
+    };
 
-    const completeHandler = () => {
-        dispatch(allCompleted())
-    }
+    const completeHadler = () => {
+        dispatch(allCompleted());
+    };
 
-    const cleaerHandler = () => {
-        dispatch(clearCompleted())
-    }
+    const clearHeandler = () => {
+        dispatch(clearCompleted());
+    };
 
     return (
         <div>
             <form
                 className="flex items-center bg-gray-100 px-4 py-4 rounded-md"
-                onSubmit={handleAddTodo}
+                onSubmit={submitHandler}
             >
                 <img src={noteImage} className="w-6 h-6" alt="Add todo" />
                 <input
                     type="text"
                     placeholder="Type your todo"
                     className="w-full text-lg px-4 py-1 border-none outline-none bg-gray-100 text-gray-500"
-                    value={todo}
+                    value={input}
                     onChange={handleInput}
                 />
                 <button
@@ -56,17 +51,15 @@ const Header = () => {
             <ul className="flex justify-between my-4 text-xs text-gray-500">
                 <li
                     className="flex space-x-1 cursor-pointer"
-                    onClick={completeHandler}
+                    onClick={completeHadler}
                 >
-                    <img src={completeImage} className="w-4 h-4" alt="Complete" />
+                    <img className="w-4 h-4" src={tickImage} alt="Complete" />
                     <span>Complete All Tasks</span>
                 </li>
-                <li className="cursor-pointer" onClick={cleaerHandler}>
+                <li className="cursor-pointer" onClick={clearHeandler}>
                     Clear completed
                 </li>
             </ul>
         </div>
     );
-};
-
-export default Header;
+}

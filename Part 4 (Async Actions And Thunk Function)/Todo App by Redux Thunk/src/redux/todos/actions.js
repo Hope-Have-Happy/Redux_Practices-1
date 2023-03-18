@@ -1,63 +1,59 @@
 import {
-    ADDED, ALLCOMPLETED,
+    ADDED,
+    ALLCOMPLETED,
     CLEARCOMPLETED,
     COLORSELECTED,
-    DELETED, FETCH_TODOS, TOGGLED
-} from "./actionsTypes";
+    DELETED,
+    LOADED,
+    TOGGLED,
+} from "./actionTypes";
 
-export const addTodo = (text) => {
+export const loaded = (todos) => {
+    return {
+        type: LOADED,
+        payload: todos,
+    };
+};
+
+export const added = (todoText) => {
     return {
         type: ADDED,
-        payload: text,
-    }
-}
+        payload: todoText,
+    };
+};
 
-export const fetchTodo = (value) => {
-    return {
-        type: FETCH_TODOS,
-        payload: value,
-    }
-}
-
-export const clearCompleted = () => {
-    return {
-        type: CLEARCOMPLETED,
-    }
-}
-
-export const toggleTodo = (id) => {
+export const toggled = (todoId) => {
     return {
         type: TOGGLED,
-        payload: id,
-    }
-}
+        payload: todoId,
+    };
+};
 
 export const colorSelected = (todoId, color) => {
     return {
         type: COLORSELECTED,
         payload: {
             todoId,
-            color
-        }
-    }
-}
+            color,
+        },
+    };
+};
 
-export const deleteTodo = (id) => {
+export const deleted = (todoId) => {
     return {
         type: DELETED,
-        payload: id,
-    }
-}
+        payload: todoId,
+    };
+};
 
 export const allCompleted = () => {
     return {
         type: ALLCOMPLETED,
-    }
-}
+    };
+};
 
-export const toggleAll = () => {
+export const clearCompleted = () => {
     return {
-        type: TOGGLEALL,
-    }
-}
-
+        type: CLEARCOMPLETED,
+    };
+};
