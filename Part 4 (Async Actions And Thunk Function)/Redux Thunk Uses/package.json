@@ -1,0 +1,13 @@
+{
+  "name": "Async-actions-and-thunk-function",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "3H",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "2",
+    "nodemon": "^2.0.21",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2"
+  }
+}
